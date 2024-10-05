@@ -1,11 +1,11 @@
+import type { PartialBy } from "@sequelize/utils";
 import {
-  Table,
   Column,
-  Model,
   DataType,
   ForeignKey,
+  Model,
+  Table,
 } from "sequelize-typescript";
-import type { PartialBy } from "@sequelize/utils";
 import Products from "./Products";
 
 type ShopPositionsAttributes = {
@@ -31,7 +31,7 @@ export default class ShopPositions extends Model<
   @Column({
     primaryKey: true,
     type: DataType.INTEGER,
-    autoIncrement: true
+    autoIncrement: true,
   })
   declare position_id: number;
 

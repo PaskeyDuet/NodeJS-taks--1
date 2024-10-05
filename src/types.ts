@@ -1,5 +1,7 @@
 import { Request } from "express";
 import type Products from "./database/models/Products";
+import type ShopPositions from "./database/models/ShopPositions";
+import type Shops from "./database/models/Shops";
 
 export type CreateProductBodyType = {
   productName: string;
@@ -9,8 +11,27 @@ export type CreateRemainderBodyType = {
   shopId: number;
   remainder: number;
 };
+export type CreateShopType = {
+  shopName: string;
+};
+export type CheckRemainderType = {
+  productId: number;
+};
 
 export type ProductsControllerType = {
   create: (productName: string) => Promise<Products>;
-  createRemainder: (productId: number, shopId: number, remainder: number) => unknown;
+  getAll: () => Promise<Products[]>;
+};
+
+export type ShopControllerType = {
+  createRemainder: (
+    productId: number,
+    shopId: number,
+    remainder: number
+  ) => unknown;
+  createShop: (productName: string) => Promise<Shops>;
+  checkRemainders: (
+    shopId: number,
+    productId: number
+  ) => Promise<ShopPositions[]>;
 };

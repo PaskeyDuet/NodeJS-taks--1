@@ -1,7 +1,9 @@
 import type { ProductsControllerType } from "@/types";
 import { where } from "@sequelize/core";
+import { attribute } from "@sequelize/core/_non-semver-use-at-your-own-risk_/expression-builders/attribute.js";
 import Products from "../models/Products";
 import ShopPositions from "../models/ShopPositions";
+import Shops from "../models/Shops";
 
 export default (): ProductsControllerType => {
   return {
@@ -9,30 +11,7 @@ export default (): ProductsControllerType => {
       Products.create({
         product_name: productName,
       }),
-    createRemainder: async (productId: number, shopId: number, remainder: number) => {
-      const shopPosition = await ShopPositions.findOne({
-        where: {
-          shop_id: shopId,
-          product_id: productId,
-        },
-      });
-      if (shopPosition) {
-        return await ShopPositions.create({
-          shop_id: shopId,
-          product_id: productId,
-          quantity: remainder,
-        });
-      } else {
-        return await ShopPositions.update(
-          { quantity: remainder },
-          {
-            where: {
-              shop_id: shopId,
-              product_id: productId,
-            },
-          },
-        );
-      }
-    },
+    getAll: () =>
+      Products.findAll({ attributes: ["product_name", "product_id"] }),
   };
 };
